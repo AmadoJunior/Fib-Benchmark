@@ -1,0 +1,37 @@
+{
+  "name": "fibbench",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node tests",
+    "test-wasi": "wasmtime --dir . build/debug.wasm",
+    "asbuild:debug": "asc assembly/index.ts --target debug",
+    "asbuild:release": "asc assembly/index.ts --target release",
+    "asbuild": "npm run asbuild:debug && npm run asbuild:release",
+    "build": "asc assembly/getFile.ts --target getFile",
+    "wasmtime": "wasmtime --allow-precompiled --dir . build/getFile.wasm",
+    "start": "npx serve ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@assemblyscript/loader": "^0.27.1",
+    "@koa/router": "^12.0.0",
+    "as-wasi": "^0.6.0",
+    "express": "^4.18.2",
+    "koa": "^2.14.1",
+    "koa-router": "^12.0.0"
+  },
+  "devDependencies": {
+    "@assemblyscript/wasi-shim": "^0.1.0",
+    "assemblyscript": "^0.27.1"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./build/release.js",
+      "types": "./build/release.d.ts"
+    }
+  }
+}
